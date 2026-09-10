@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #0b0b0c;
+  --red: #e01b22;
+  --red-dark: #b8141a;
+  --paper: #ffffff;
+  --surface: #f2f2f0;
+  --line: #e3e1de;
+  --text: #14140f;
+  --muted: #5c5c5c;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-red: var(--red);
+  --color-red-dark: var(--red-dark);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-poppins), var(--font-nunito), ui-sans-serif, system-ui,
+    sans-serif;
+  --font-display: var(--font-bebas), ui-sans-serif, sans-serif;
+  --font-script: var(--font-always-angry), cursive;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-synthesis: none;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.h1,
+.h2,
+.h2-xl,
+.h2-cta,
+.h3,
+.price-xl {
+  letter-spacing: -0.02em;
+}
+
+.h1 {
+  font-size: clamp(40px, 7vw, 92px);
+}
+
+.h2 {
+  font-size: clamp(26px, 4.5vw, 56px);
+}
+
+.h2-xl {
+  font-size: clamp(28px, 6vw, 72px);
+}
+
+.h2-cta {
+  font-size: clamp(28px, 8vw, 92px);
+}
+
+.h3 {
+  font-size: clamp(18px, 2.2vw, 28px);
+}
+
+.price-xl {
+  font-size: clamp(28px, 4vw, 48px);
+}
+
+.phone-xl {
+  font-size: clamp(20px, 4vw, 40px);
+}
+
+.hero-lead {
+  max-width: 15rem;
+  margin-inline: auto;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 640px) {
+  .hero-lead {
+    max-width: 36em;
+  }
+}
+
+.font-display {
+  font-synthesis: none;
+}
+
+.font-script {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-synthesis: none;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.header-week {
+  margin-left: auto;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.perk-extra {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 350ms ease;
+}
+
+.perk-extra > p {
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 280ms ease 40ms,
+    transform 350ms ease;
+}
+
+.perk-card:hover .perk-extra,
+.perk-card:focus-within .perk-extra {
+  grid-template-rows: 1fr;
+}
+
+.perk-card:hover .perk-extra > p,
+.perk-card:focus-within .perk-extra > p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (hover: none) {
+  .perk-extra {
+    grid-template-rows: 1fr;
+  }
+
+  .perk-extra > p {
+    opacity: 1;
+    transform: none;
+  }
 }
