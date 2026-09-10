@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { Business } from "@/components/Business";
 import { Contacts } from "@/components/Contacts";
 import { Cta } from "@/components/Cta";
 import { Faq } from "@/components/Faq";
@@ -8,14 +7,17 @@ import { Footer } from "@/components/Footer";
 import { Gallery } from "@/components/Gallery";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { News } from "@/components/News";
 import { Pricing } from "@/components/Pricing";
 import { Reviews } from "@/components/Reviews";
 import { Schedule } from "@/components/Schedule";
 import { Services } from "@/components/Services";
+import { PageMotion } from "@/components/animations/PageMotion";
 
 export default function Home() {
   return (
     <div id="top" className="flex flex-1 flex-col bg-paper">
+      <PageMotion />
       <Header />
       <main>
         <Hero />
@@ -25,10 +27,15 @@ export default function Home() {
           <Schedule />
         </Suspense>
         <Gallery />
-        <Business />
+        <News />
         <Pricing />
-        <Reviews />
-        <Cta />
+        <div
+          className="bg-red bg-cover bg-center"
+          style={{ backgroundImage: "url('/cta-bg.png')" }}
+        >
+          <Reviews />
+          <Cta />
+        </div>
         <Faq />
         <Contacts />
       </main>

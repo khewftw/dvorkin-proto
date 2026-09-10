@@ -7,10 +7,10 @@ export type Facility = {
 };
 
 export const facilities: Facility[] = [
-  { id: "court", label: "Игровой зал", price: 2000 },
-  { id: "gym", label: "Тренажёрный", price: 300 },
-  { id: "tennis", label: "Настольный теннис", price: 300 },
-  { id: "sauna", label: "Сауна", price: 1000 },
+  { id: "court", label: "Игровой зал", price: 5000 },
+  { id: "gym", label: "Тренажёрный", price: 200 },
+  { id: "tennis", label: "Настольный теннис", price: 115 },
+  { id: "sauna", label: "Сауна", price: 1200 },
 ];
 
 export const HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] as const;
@@ -42,6 +42,21 @@ const MONTHS = [
   "декабря",
 ];
 
+const MONTHS_NOMINATIVE = [
+  "январь",
+  "февраль",
+  "март",
+  "апрель",
+  "май",
+  "июнь",
+  "июль",
+  "август",
+  "сентябрь",
+  "октябрь",
+  "ноябрь",
+  "декабрь",
+];
+
 export type ScheduleDay = {
   iso: string;
   weekday: string;
@@ -66,9 +81,23 @@ function isBooked(facility: FacilityId, dayIndex: number, hour: number) {
   return (dayIndex * 13 + hour + facility.length) % 7 === 0;
 }
 
-export function buildWeek(fromUtc = Date.UTC(2026, 8, 10)): ScheduleDay[] {
-  return Array.from({ length: 7 }, (_, dayIndex) => {
-    const date = new Date(fromUtc + dayIndex * 86_400_000);
+const now = new Date();
+const currentYear = now.getUTCFullYear();
+const currentMonth = now.getUTCMonth();
+const currentDay = now.getUTCDate();
+const monthStart = Date.UTC(currentYear, currentMonth, 1);
+const daysInMonth = new Date(
+  Date.UTC(currentYear, currentMonth + 1, 0),
+).getUTCDate();
+
+export const todayIso = `${currentYear}-${pad(currentMonth + 1)}-${pad(currentDay)}`;
+export const monthName = MONTHS_NOMINATIVE[currentMonth];
+export const monthStartOffset =
+  (new Date(monthStart).getUTCDay() + 6) % 7;
+
+export function buildMonth(): ScheduleDay[] {
+  return Array.from({ length: daysInMonth }, (_, dayIndex) => {
+    const date = new Date(monthStart + dayIndex * 86_400_000);
     const weekday = WEEKDAYS[date.getUTCDay()];
     const booked = Object.fromEntries(
       facilities.map((f) => [
@@ -95,4 +124,4 @@ export function hourLabel(hour: number) {
   return `${pad(hour)}:00–${pad(hour + 1)}:00`;
 }
 
-export const week = buildWeek();
+export const scheduleDays = buildMonth();

@@ -1,26 +1,22 @@
+import Image from "next/image";
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 type LogoProps = {
   className?: string;
-  inverted?: boolean;
 };
 
-export function Logo({ className, inverted = false }: LogoProps) {
+export function Logo({ className }: LogoProps) {
   return (
-    <a
-      href="#top"
-      className={cn(
-        "flex flex-col leading-[0.95] tracking-[-0.02em]",
-        inverted ? "text-white" : "text-white",
-        className,
-      )}
-    >
-      <span className="font-display text-[18px] font-bold uppercase sm:text-[22px]">
-        Дом спорта
-      </span>
-      <span className="font-display text-[9px] font-semibold uppercase tracking-[0.16em] text-white/70 sm:text-[11px]">
-        Им. М. Дворкина
-      </span>
-    </a>
+    <Link href="/#top" className={cn("block", className)} aria-label="На главную">
+      <Image
+        src="/logo.svg"
+        alt="Дом спорта имени М. Дворкина"
+        width={1061}
+        height={404}
+        priority
+        className="h-auto w-[122px] sm:w-[150px]"
+      />
+    </Link>
   );
 }

@@ -1,12 +1,33 @@
 import type { Metadata } from "next";
-import { Nunito_Sans, Poppins } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
+const productSans = localFont({
+  src: [
+    {
+      path: "../fonts/ProductSans-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/ProductSans-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/ProductSans-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../fonts/ProductSans-Black.ttf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-product-sans",
+  display: "swap",
 });
 
 const nunito = Nunito_Sans({
@@ -16,7 +37,7 @@ const nunito = Nunito_Sans({
 });
 
 const bebas = localFont({
-  src: "../fonts/BebasNeue-Cyrillic.ttf",
+  src: "../fonts/Bebas Neue Cyrillic.ttf",
   variable: "--font-bebas",
   display: "swap",
   weight: "400",
@@ -75,7 +96,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
-      className={`${poppins.variable} ${nunito.variable} ${bebas.variable} ${alwaysAngry.variable} h-full antialiased`}
+      className={`${productSans.variable} ${nunito.variable} ${bebas.variable} ${alwaysAngry.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col overflow-x-hidden bg-paper font-sans text-text">
         {children}

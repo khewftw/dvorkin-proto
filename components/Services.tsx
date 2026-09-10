@@ -1,5 +1,11 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/Button";
-import { HallCarousel } from "@/components/HallCarousel";
+import { Container } from "@/components/Container";
+import { LeadModal } from "@/components/LeadModal";
 
 const halls = [
   {
@@ -129,28 +135,140 @@ const halls = [
 ];
 
 export function Services() {
+  const reduceMotion = useReducedMotion();
+  const [leadService, setLeadService] = useState<string | null>(null);
+  const featured = halls[0];
+  const rest = halls.slice(1);
+
   return (
-    <section id="services" className="scroll-mt-24 bg-paper">
-      {halls.map((hall, index) => (
-        <article
-          key={hall.id}
-          id={hall.id}
-          className="grid scroll-mt-24 overflow-hidden lg:h-[680px] lg:grid-cols-12"
+    <section id="services" className="scroll-mt-24 bg-paper py-16 sm:py-24">
+      <Container>
+        <h2
+          className="font-script mb-9 text-[clamp(38px,6vw,68px)] font-bold italic leading-none"
+          data-reveal
         >
-          <div className="flex flex-col justify-center px-5 py-12 sm:px-10 sm:py-16 lg:col-span-5 lg:px-12 xl:px-16">
-            <h2 className="h2 text-red">{hall.title}</h2>
-            <p className="mt-5 max-w-[38ch] text-[16px] leading-[1.55] text-muted sm:text-[17px]">
-              {hall.text}
+          Направления и <span className="text-red">услуги</span>
+        </h2>
+
+        <motion.article
+          id={featured.id}
+          className="group relative z-10 grid scroll-mt-24 overflow-hidden bg-panel text-white shadow-[0_0_42px_rgba(43,103,243,0.45)] lg:min-h-[430px] lg:grid-cols-2"
+          data-reveal
+          whileHover={
+            reduceMotion
+              ? undefined
+              : {
+                  y: -6,
+                  boxShadow: "0 0 58px rgba(43,103,243,0.62)",
+                }
+          }
+          transition={{ type: "spring", stiffness: 280, damping: 24 }}
+        >
+          <div className="relative min-h-[300px]">
+            <Image
+              src={featured.photos[0].src}
+              alt={featured.photos[0].alt}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+            />
+            <span className="absolute left-4 top-4 bg-red px-3 py-1.5 font-display text-[11px] font-semibold uppercase tracking-[0.08em]">
+              Командные виды спорта
+            </span>
+          </div>
+          <div className="flex flex-col justify-center bg-red px-6 py-10 sm:px-10 lg:px-12">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-white/65">
+              Главная площадка комплекса
             </p>
-            <Button href={hall.href} className="mt-8 self-start">
-              Забронировать
-            </Button>
+            <h3 className="mt-4 font-display text-[clamp(32px,4vw,48px)] uppercase leading-none">
+              {featured.title}
+            </h3>
+            <p className="mt-5 max-w-[48ch] text-[15px] leading-[1.55] text-white/85">
+              {featured.text}
+            </p>
+            <div className="mt-8 flex w-full flex-col gap-3 sm:flex-row">
+              <Button
+                href={featured.href}
+                variant="inverted"
+                className="w-full shadow-[0_0_26px_rgba(255,255,255,0.5)] sm:w-auto"
+              >
+                Забронировать
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full sm:w-auto"
+                onClick={() => setLeadService(featured.title)}
+              >
+                Написать
+              </Button>
+            </div>
           </div>
-          <div className="relative h-[320px] overflow-hidden sm:h-[420px] lg:col-span-7 lg:h-full">
-            <HallCarousel photos={hall.photos} priority={index === 0} />
-          </div>
-        </article>
-      ))}
+        </motion.article>
+
+        <div className="mt-3 grid gap-3 md:grid-cols-3" data-stagger>
+          {rest.map((hall) => (
+            <motion.article
+              key={hall.id}
+              id={hall.id}
+              className="group flex scroll-mt-24 flex-col overflow-hidden bg-panel text-white"
+              data-stagger-item
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : {
+                      y: -8,
+                      boxShadow: "0 16px 34px rgba(19,25,33,0.2)",
+                    }
+              }
+              whileTap={reduceMotion ? undefined : { scale: 0.99 }}
+              transition={{ type: "spring", stiffness: 300, damping: 24 }}
+            >
+              <div className="relative h-[250px]">
+                <Image
+                  src={hall.photos[0].src}
+                  alt={hall.photos[0].alt}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                />
+                <span className="absolute left-3 top-3 bg-red px-2.5 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.08em]">
+                  Платные услуги
+                </span>
+              </div>
+              <div className="flex flex-1 flex-col p-6 lg:p-7">
+                <h3 className="font-display text-[clamp(32px,3vw,44px)] uppercase leading-none">
+                  {hall.title}
+                </h3>
+                <p className="mt-4 line-clamp-4 text-[14px] leading-[1.55] text-white/65">
+                  {hall.text}
+                </p>
+                <div className="mt-7 flex w-full flex-col gap-2.5">
+                  <Button href={hall.href} className="w-full px-6 py-3">
+                    Забронировать
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full px-6 py-3"
+                    onClick={() => setLeadService(hall.title)}
+                  >
+                    Написать
+                  </Button>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </Container>
+      <AnimatePresence>
+        {leadService ? (
+          <LeadModal
+            tariff={`Услуга: ${leadService}`}
+            onClose={() => setLeadService(null)}
+          />
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }

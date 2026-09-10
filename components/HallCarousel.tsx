@@ -53,7 +53,7 @@ export function HallCarousel({
           >
             <Arrow dir="next" />
           </button>
-          <p className="absolute bottom-4 right-4 z-10 bg-ink px-3 py-1.5 font-display text-[13px] tracking-[0.08em] text-white">
+          <p className="absolute bottom-4 right-4 z-10 bg-panel px-3 py-1.5 font-display text-[13px] tracking-[0.08em] text-white">
             {index + 1} / {total}
           </p>
         </>

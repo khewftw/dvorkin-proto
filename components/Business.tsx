@@ -29,7 +29,9 @@ export function Business() {
   return (
     <section id="business" className="scroll-mt-24 bg-ink py-16 text-white sm:py-24">
       <Container>
-        <h2 className="h2-xl">Зал под ваше мероприятие</h2>
+        <h2 className="font-script text-[clamp(38px,6vw,72px)] font-bold italic leading-none">
+          Зал <span className="text-red">под ваше мероприятие</span>
+        </h2>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((card) => (
             <figure key={card.title}>

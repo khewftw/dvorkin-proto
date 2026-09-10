@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #0b0b0c;
-  --red: #e01b22;
-  --red-dark: #b8141a;
+  --ink: #131921;
+  --red: #2b67f3;
+  --red-dark: #1f54d9;
+  --panel: #222222;
   --paper: #ffffff;
   --surface: #f2f2f0;
   --line: #e3e1de;
@@ -15,13 +16,14 @@
   --color-ink: var(--ink);
   --color-red: var(--red);
   --color-red-dark: var(--red-dark);
+  --color-panel: var(--panel);
   --color-paper: var(--paper);
   --color-surface: var(--surface);
   --color-line: var(--line);
   --color-text: var(--text);
   --color-muted: var(--muted);
-  --font-sans: var(--font-poppins), var(--font-nunito), ui-sans-serif, system-ui,
-    sans-serif;
+  --font-sans: var(--font-product-sans), var(--font-nunito), ui-sans-serif,
+    system-ui, sans-serif;
   --font-display: var(--font-bebas), ui-sans-serif, sans-serif;
   --font-script: var(--font-always-angry), cursive;
 }
@@ -63,7 +65,7 @@ h4 {
 }
 
 .h2 {
-  font-size: clamp(26px, 4.5vw, 56px);
+  font-size: clamp(30px, 4.5vw, 56px);
 }
 
 .h2-xl {
@@ -87,14 +89,15 @@ h4 {
 }
 
 .hero-lead {
-  max-width: 15rem;
-  margin-inline: auto;
+  max-width: 27rem;
+  margin-inline: 0;
   overflow-wrap: break-word;
 }
 
 @media (min-width: 640px) {
   .hero-lead {
     max-width: 36em;
+    margin-inline: auto;
   }
 }
 
@@ -153,5 +156,35 @@ h4 {
   .perk-extra > p {
     opacity: 1;
     transform: none;
+  }
+}
+
+.review-card {
+  min-width: 86vw;
+}
+
+@media (min-width: 1024px) {
+  .review-card {
+    min-width: min(608px, calc((100vw - 4rem) / 2));
+  }
+
+  .contacts-panel {
+    padding-right: 3.5rem;
+    padding-left: max(3rem, calc((100vw - 1280px) / 2 + 1.5rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 
 const items = [
   {
@@ -24,12 +27,17 @@ const items = [
 ];
 
 export function Features() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="bg-paper py-16 sm:py-20 lg:py-24">
       <div className="mx-auto grid w-full max-w-[1280px] gap-6 px-4 sm:px-6 lg:grid-cols-12 lg:items-stretch lg:gap-x-5">
-        <div className="relative z-0 mx-auto w-full max-w-sm lg:col-span-5 lg:mx-0 lg:flex lg:h-full lg:max-w-none lg:items-center lg:justify-center lg:overflow-hidden">
+        <div
+          className="relative z-0 mx-auto w-full max-w-sm lg:col-span-5 lg:mx-0 lg:flex lg:h-full lg:max-w-none lg:items-center lg:justify-center lg:overflow-hidden"
+          data-reveal
+        >
           <Image
-            src="/blocks/features/creative.png"
+            src="/blocks/features/creative-blue.png"
             alt="Волейболистка в игровом амплуа"
             width={1086}
             height={1448}
@@ -39,16 +47,30 @@ export function Features() {
         </div>
 
         <div className="relative z-10 flex min-h-0 flex-col lg:col-span-7">
-          <h2 className="font-script mb-6 text-[clamp(40px,6.5vw,72px)] font-bold italic leading-[1.05] lg:mb-8">
+          <h2
+            className="font-script mb-6 text-[clamp(32px,4.5vw,54px)] font-bold italic leading-[1.05] lg:mb-8"
+            data-reveal
+          >
             Один комплекс.{" "}
             <span className="text-red">Все, что нужно.</span>
           </h2>
-          <div className="grid min-h-0 flex-1 grid-cols-1 border-l border-t border-line sm:grid-cols-2">
+          <div
+            className="grid min-h-0 flex-1 grid-cols-1 border-l border-t border-line sm:grid-cols-2"
+            data-stagger
+          >
             {items.map((item) => (
-              <article
+              <motion.article
                 key={item.title}
                 className="perk-card group relative flex min-h-[240px] cursor-pointer flex-col border-b border-r border-line bg-paper p-6 text-text transition-colors duration-300 hover:border-red hover:bg-red hover:text-white focus-within:border-red focus-within:bg-red focus-within:text-white sm:min-h-[280px] lg:min-h-0 lg:p-7"
                 tabIndex={0}
+                data-stagger-item
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : { y: -8, scale: 1.012, zIndex: 2 }
+                }
+                whileTap={reduceMotion ? undefined : { scale: 0.985 }}
+                transition={{ type: "spring", stiffness: 320, damping: 24 }}
               >
                 <span
                   className="absolute right-4 top-4 text-current opacity-70"
@@ -65,7 +87,7 @@ export function Features() {
                     </p>
                   </div>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>
